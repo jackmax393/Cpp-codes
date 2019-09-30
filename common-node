@@ -1,0 +1,86 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+
+class Node { 
+public: 
+	int data; 
+	Node* next; 
+}; 
+
+int size (Node* head);  
+int Intersection (int d, Node* head1, Node* head2); 
+
+int Intesect(Node* head1, Node* head2) 
+{ 
+	int num1 = size(head1); 
+	int num2 = size(head2); 
+	int d; 
+	if (num1 > num2) { 
+		d = num1 - num2; 
+		return Intersection(d, head1, head2); 
+	} 
+	else { 
+		d = num2 - num1; 
+		return Intersection(d, head2, head1); 
+	} 
+} 
+int Intersection(int d, Node* head1, Node* head2) 
+{ 
+	Node* c1 = head1; 
+	Node* c2 = head2;  
+	for (int i = 0; i < d; i++) { 
+		if (c1 == NULL) { 
+			return -1; 
+		} 
+		c1 = c1->next; 
+	} 
+	while (c1 != NULL && c2 != NULL) { 
+		if (c1 == c2) 
+			return c1->data; 
+		c1 = c1->next; 
+		c2 = c2->next; 
+	} 
+
+	return -1; 
+} 
+int size(Node* head) 
+{ 
+	Node* temp = head; 
+	int count = 0;  
+	while (temp != NULL) { 
+		count++; 
+		temp = temp->next; 
+	}
+	return count; 
+} 
+
+void enter (Node* head, int x)
+{
+    Node* temp = new Node () ;
+    temp -> data = x ;
+    temp -> next = head ;
+    head = temp ;
+}
+
+int main() 
+{ 
+    Node* head1 = NULL; 
+    Node* head2 = NULL;
+    int count1, count2; //count is basically number of terms in Linked List 1 and 2 
+    cin>>count1>>count2;
+    //Entering into List 1
+    while (count1--) {
+        int num ;
+        cin>>num;
+        enter (head1, num) ;
+    }
+    //Entering into list 2
+    while (count2--) {
+        int num ;
+        cin>>num ;
+        enter ( head2, num) ;
+    }
+	cout << "Intersection Node: " << Intesect(head1, head2); 
+    return 0; 
+} 
+
